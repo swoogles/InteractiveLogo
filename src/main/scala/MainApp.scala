@@ -30,16 +30,24 @@ object MainApp extends JSApp {
   def createElementId(sector: Sector, logoColor: LogoColor, index: Int): String =
     s"#${sector}_${logoColor}_0$index"
 
+  def logoElementGroup(sector: Sector, logoColor: LogoColor, numberOfElements: Int): List[JQuery] =
+    Range.inclusive(1, numberOfElements).map( idx => createElementId(sector, logoColor, idx)).map(id => JQueryStatic(id)).toList
+
 
   def main(): Unit = {
     println("Starting 'InteractiveLogo'...")
-    val constructedElement = JQueryStatic(createElementId(Sector.Side, LogoColor.Light, 1))
+    val lightSideElements = logoElementGroup(Sector.Side, LogoColor.Light, 8)
+      lightSideElements
+      .foreach(element => element.hide)
+    var currentLightSideIndex = 1
     import org.scalajs.dom
-    val element = JQueryStatic("#TOP_Med_04")
+    val element: JQuery = JQueryStatic("#TOP_Med_04")
     element.hide()
     dom.window.setInterval( () => {
-      if (constructedElement.is(":visible")) constructedElement.hide()
-      else constructedElement.show()
+      if (currentLightSideIndex <= lightSideElements.size) {
+        lightSideElements(currentLightSideIndex).show()
+        currentLightSideIndex += 1
+      }
 
       if (element.is(":visible")) element.hide()
       else element.show()
