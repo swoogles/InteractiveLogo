@@ -3515,27 +3515,36 @@ function $h_LMainApp$() {
   /*<skip>*/
 }
 $h_LMainApp$.prototype = $c_LMainApp$.prototype;
-$c_LMainApp$.prototype.MainApp$$$anonfun$main$2__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__O = (function(currentLightSideIndex$1, lightSideElements$1, element$1) {
-  if ((currentLightSideIndex$1.elem$1 <= $f_sc_LinearSeqOptimized__length__I(lightSideElements$1))) {
-    var n = currentLightSideIndex$1.elem$1;
-    $f_sc_LinearSeqOptimized__apply__I__O(lightSideElements$1, n).show();
-    currentLightSideIndex$1.elem$1 = ((1 + currentLightSideIndex$1.elem$1) | 0)
-  };
-  if ($uZ(element$1.is(":visible"))) {
-    element$1.hide()
-  } else {
-    element$1.show()
-  };
-  var this$6 = $m_s_Console$();
-  var this$7 = $as_Ljava_io_PrintStream(this$6.outVar$2.v$1);
-  this$7.java$lang$JSConsoleBasedPrintStream$$printString__T__V("toggling\n")
-});
 $c_LMainApp$.prototype.init___ = (function() {
   this.biggestSideMedium$1 = "SIDE_Med_07";
   this.biggestSideLight$1 = "SIDE_Light_08";
   this.biggestTopMedium$1 = "TOP_Med_04";
   this.biggestTopLight$1 = "TOP_Light_06";
   return this
+});
+$c_LMainApp$.prototype.MainApp$$$anonfun$main$5__sr_IntRef__sci_List__sr_IntRef__sci_List__sr_IntRef__sci_List__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__O = (function(currentLightSideIndex$1, lightSideElements$1, currentMediumSideIndex$1, mediumSideElements$1, currentLightTopIndex$1, lightTopElements$1, currentMediumTopIndex$1, mediumTopElements$1, darkFill$1) {
+  if ((currentLightSideIndex$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(lightSideElements$1))) {
+    var n = currentLightSideIndex$1.elem$1;
+    $f_sc_LinearSeqOptimized__apply__I__O(lightSideElements$1, n).show();
+    currentLightSideIndex$1.elem$1 = ((1 + currentLightSideIndex$1.elem$1) | 0)
+  } else if ((currentMediumSideIndex$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(mediumSideElements$1))) {
+    var n$1 = currentMediumSideIndex$1.elem$1;
+    $f_sc_LinearSeqOptimized__apply__I__O(mediumSideElements$1, n$1).show();
+    currentMediumSideIndex$1.elem$1 = ((1 + currentMediumSideIndex$1.elem$1) | 0)
+  } else if ((currentLightTopIndex$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(lightTopElements$1))) {
+    var n$2 = currentLightTopIndex$1.elem$1;
+    $f_sc_LinearSeqOptimized__apply__I__O(lightTopElements$1, n$2).show();
+    currentLightTopIndex$1.elem$1 = ((1 + currentLightTopIndex$1.elem$1) | 0)
+  } else if ((currentMediumTopIndex$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(mediumTopElements$1))) {
+    var n$3 = currentMediumTopIndex$1.elem$1;
+    $f_sc_LinearSeqOptimized__apply__I__O(mediumTopElements$1, n$3).show();
+    currentMediumTopIndex$1.elem$1 = ((1 + currentMediumTopIndex$1.elem$1) | 0)
+  } else {
+    darkFill$1.show(500)
+  };
+  var this$5 = $m_s_Console$();
+  var this$6 = $as_Ljava_io_PrintStream(this$5.outVar$2.v$1);
+  this$6.java$lang$JSConsoleBasedPrintStream$$printString__T__V("toggling\n")
 });
 $c_LMainApp$.prototype.createElementId__s_Enumeration$Value__s_Enumeration$Value__I__T = (function(sector, logoColor, index) {
   return ((((("#" + sector) + "_") + logoColor) + "_0") + index)
@@ -3544,22 +3553,51 @@ $c_LMainApp$.prototype.main__V = (function() {
   var this$2 = $m_s_Console$();
   var this$3 = $as_Ljava_io_PrintStream(this$2.outVar$2.v$1);
   this$3.java$lang$JSConsoleBasedPrintStream$$printString__T__V("Starting 'InteractiveLogo'...\n");
+  var darkFill = $moduleDefault($i_jquery)("#B_Dark_Fill");
+  darkFill.hide();
   var lightSideElements = this.logoElementGroup__s_Enumeration$Value__s_Enumeration$Value__I__sci_List($m_LMainApp$Sector$().Side$2, $m_LMainApp$LogoColor$().Light$2, 8);
   var these = lightSideElements;
   while ((!these.isEmpty__Z())) {
     var arg1 = these.head__O();
     arg1.hide();
-    var this$4 = these;
-    these = this$4.tail__sci_List()
+    var this$9 = these;
+    these = this$9.tail__sci_List()
   };
-  var currentLightSideIndex = new $c_sr_IntRef().init___I(1);
-  var element$3 = $moduleDefault($i_jquery)("#TOP_Med_04");
-  element$3.hide();
-  $m_Lorg_scalajs_dom_package$().window__Lorg_scalajs_dom_raw_Window().setInterval((function(currentLightSideIndex$1, lightSideElements$1, element$1) {
+  var mediumSideElements = this.logoElementGroup__s_Enumeration$Value__s_Enumeration$Value__I__sci_List($m_LMainApp$Sector$().Side$2, $m_LMainApp$LogoColor$().Medium$2, 7);
+  var these$1 = mediumSideElements;
+  while ((!these$1.isEmpty__Z())) {
+    var arg1$1 = these$1.head__O();
+    arg1$1.hide();
+    var this$10 = these$1;
+    these$1 = this$10.tail__sci_List()
+  };
+  var lightTopElements = this.logoElementGroup__s_Enumeration$Value__s_Enumeration$Value__I__sci_List($m_LMainApp$Sector$().Top$2, $m_LMainApp$LogoColor$().Light$2, 8);
+  var these$2 = lightTopElements;
+  while ((!these$2.isEmpty__Z())) {
+    var arg1$2 = these$2.head__O();
+    arg1$2.hide();
+    var this$11 = these$2;
+    these$2 = this$11.tail__sci_List()
+  };
+  var mediumTopElements = this.logoElementGroup__s_Enumeration$Value__s_Enumeration$Value__I__sci_List($m_LMainApp$Sector$().Top$2, $m_LMainApp$LogoColor$().Medium$2, 7);
+  var these$3 = mediumTopElements;
+  while ((!these$3.isEmpty__Z())) {
+    var arg1$3 = these$3.head__O();
+    arg1$3.hide();
+    var this$12 = these$3;
+    these$3 = this$12.tail__sci_List()
+  };
+  var currentLightSideIndex = new $c_sr_IntRef().init___I(0);
+  var currentMediumSideIndex = new $c_sr_IntRef().init___I(0);
+  var currentLightTopIndex = new $c_sr_IntRef().init___I(0);
+  var currentMediumTopIndex = new $c_sr_IntRef().init___I(0);
+  var element$6 = $moduleDefault($i_jquery)("#TOP_Med_04");
+  element$6.hide();
+  $m_Lorg_scalajs_dom_package$().window__Lorg_scalajs_dom_raw_Window().setInterval((function(currentLightSideIndex$1, lightSideElements$1, currentMediumSideIndex$1, mediumSideElements$1, currentLightTopIndex$1, lightTopElements$1, currentMediumTopIndex$1, mediumTopElements$1, darkFill$1) {
     return (function() {
-      return $m_LMainApp$().MainApp$$$anonfun$main$2__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__O(currentLightSideIndex$1, lightSideElements$1, element$1)
+      return $m_LMainApp$().MainApp$$$anonfun$main$5__sr_IntRef__sci_List__sr_IntRef__sci_List__sr_IntRef__sci_List__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__O(currentLightSideIndex$1, lightSideElements$1, currentMediumSideIndex$1, mediumSideElements$1, currentLightTopIndex$1, lightTopElements$1, currentMediumTopIndex$1, mediumTopElements$1, darkFill$1)
     })
-  })(currentLightSideIndex, lightSideElements, element$3), 1000.0)
+  })(currentLightSideIndex, lightSideElements, currentMediumSideIndex, mediumSideElements, currentLightTopIndex, lightTopElements, currentMediumTopIndex, mediumTopElements, darkFill), 200.0)
 });
 $c_LMainApp$.prototype.$$js$exported$meth$main__O = (function() {
   this.main__V()
@@ -5528,7 +5566,7 @@ $c_LMainApp$LogoColor$.prototype.init___ = (function() {
   $c_s_Enumeration.prototype.init___I.call(this, 0);
   $n_LMainApp$LogoColor$ = this;
   var i = this.nextId$1;
-  this.Medium$2 = new $c_s_Enumeration$Val().init___s_Enumeration__I__T(this, i, "Medium");
+  this.Medium$2 = new $c_s_Enumeration$Val().init___s_Enumeration__I__T(this, i, "Med");
   var i$1 = this.nextId$1;
   this.Light$2 = new $c_s_Enumeration$Val().init___s_Enumeration__I__T(this, i$1, "Light");
   return this

@@ -17,7 +17,7 @@ object MainApp extends JSApp {
 
   object LogoColor extends Enumeration {
     type LogoColor = Value
-    val Medium = Value("Medium")
+    val Medium = Value("Med")
     val Light = Value("Light")
   }
 
@@ -36,25 +36,59 @@ object MainApp extends JSApp {
 
   def main(): Unit = {
     println("Starting 'InteractiveLogo'...")
+
+    val darkFill = JQueryStatic("#B_Dark_Fill")
+    darkFill.hide()
     val lightSideElements = logoElementGroup(Sector.Side, LogoColor.Light, 8)
-      lightSideElements
+    lightSideElements
       .foreach(element => element.hide)
-    var currentLightSideIndex = 1
+
+    val mediumSideElements = logoElementGroup(Sector.Side, LogoColor.Medium, 7)
+    mediumSideElements
+      .foreach(element => element.hide)
+
+    val lightTopElements = logoElementGroup(Sector.Top, LogoColor.Light, 8)
+    lightTopElements
+      .foreach(element => element.hide)
+
+    val mediumTopElements = logoElementGroup(Sector.Top, LogoColor.Medium, 7)
+    mediumTopElements
+      .foreach(element => element.hide)
+
+
+    var currentLightSideIndex = 0
+    var currentMediumSideIndex = 0
+    var currentLightTopIndex = 0
+    var currentMediumTopIndex = 0
+
     import org.scalajs.dom
     val element: JQuery = JQueryStatic("#TOP_Med_04")
     element.hide()
     dom.window.setInterval( () => {
-      if (currentLightSideIndex <= lightSideElements.size) {
+      if (currentLightSideIndex < lightSideElements.size) {
         lightSideElements(currentLightSideIndex).show()
         currentLightSideIndex += 1
+      } else if ( currentMediumSideIndex < mediumSideElements.size) {
+        mediumSideElements(currentMediumSideIndex).show()
+        currentMediumSideIndex += 1
+      }  else if (currentLightTopIndex < lightTopElements.size) {
+        lightTopElements(currentLightTopIndex).show()
+        currentLightTopIndex += 1
+    } else if ( currentMediumTopIndex < mediumTopElements.size) {
+        mediumTopElements(currentMediumTopIndex).show()
+        currentMediumTopIndex += 1
+      }
+      else {
+        darkFill.show(500)
       }
 
-      if (element.is(":visible")) element.hide()
-      else element.show()
+
+//      if (element.is(":visible")) element.hide()
+//      else element.show()
 
       println("toggling")
 
-    }, 1000)
+    }, 200)
 //    dom.window.alert("Hi from Scala-js-dom")
 //    dom.document.querySelector("#TOP_Med_04").setAttribute("hidden", "true")
 
