@@ -35,68 +35,60 @@ object MainApp extends JSApp {
 
 
   def main(): Unit = {
-    println("Starting 'InteractiveLogo'...")
+    println("One big collection of elements")
 
     val darkFill = JQueryStatic("#B_Dark_Fill")
     darkFill.hide()
+
+    val counterSpaceElements =
+      List(
+      JQueryStatic("#Counter_Space_01"),
+        JQueryStatic("#Counter_Space_02")
+        )
+
     val lightSideElements = logoElementGroup(Sector.Side, LogoColor.Light, 8)
-    lightSideElements
-      .foreach(element => element.hide)
-
     val mediumSideElements = logoElementGroup(Sector.Side, LogoColor.Medium, 7)
-    mediumSideElements
-      .foreach(element => element.hide)
-
     val lightTopElements = logoElementGroup(Sector.Top, LogoColor.Light, 8)
-    lightTopElements
-      .foreach(element => element.hide)
-
     val mediumTopElements = logoElementGroup(Sector.Top, LogoColor.Medium, 7)
-    mediumTopElements
-      .foreach(element => element.hide)
 
+    val allElements =
+      counterSpaceElements ++
+      lightSideElements ++
+        mediumSideElements ++
+        lightTopElements ++
+        mediumTopElements
+
+    allElements.foreach(_.hide)
 
     var currentLightSideIndex = 0
-    var currentMediumSideIndex = 0
-    var currentLightTopIndex = 0
-    var currentMediumTopIndex = 0
+    var finished = false
 
     import org.scalajs.dom
-    val element: JQuery = JQueryStatic("#TOP_Med_04")
-    element.hide()
     dom.window.setInterval( () => {
-      if (currentLightSideIndex < lightSideElements.size) {
-        lightSideElements(currentLightSideIndex).show()
+      if (currentLightSideIndex < allElements.size) {
+        allElements(currentLightSideIndex).show()
         currentLightSideIndex += 1
-      } else if ( currentMediumSideIndex < mediumSideElements.size) {
-        mediumSideElements(currentMediumSideIndex).show()
-        currentMediumSideIndex += 1
-      }  else if (currentLightTopIndex < lightTopElements.size) {
-        lightTopElements(currentLightTopIndex).show()
-        currentLightTopIndex += 1
-    } else if ( currentMediumTopIndex < mediumTopElements.size) {
-        mediumTopElements(currentMediumTopIndex).show()
-        currentMediumTopIndex += 1
-      }
-      else {
+      } else if (darkFill.is(":hidden")){
         darkFill.show(500)
+      } else if (!finished) {
+        lightSideElements.foreach(lightSideElement => {
+          val rawPoints: String = lightSideElement.children("polygon").attr("points").get
+          println("rawPoints: " + rawPoints)
+          println("shape points: " )
+          val pairedPoints: List[Array[String]] = rawPoints.split("\\s+").grouped(2).toList
+          println("num of paired points: " + pairedPoints.length)
+          pairedPoints.foreach(println)
+          val newPoints = pairedPoints.map {
+            case Array(x, y) => s"${x.toFloat-50}  $y"
+          }.mkString(" ")
+          lightSideElement.children("polygon").attr("points", newPoints)
+        })
+        finished = true
       }
-
-
 //      if (element.is(":visible")) element.hide()
 //      else element.show()
+    }, 100)
 
-      println("toggling")
-
-    }, 200)
-//    dom.window.alert("Hi from Scala-js-dom")
-//    dom.document.querySelector("#TOP_Med_04").setAttribute("hidden", "true")
-
-
-//    val p = document.createElement("p")
-//    val text = document.createTextNode("Hello!")
-//    p.appendChild(text)
-//    document.body.appendChild(p)
   }
 
 }
