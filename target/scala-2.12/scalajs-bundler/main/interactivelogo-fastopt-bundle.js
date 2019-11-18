@@ -1817,6 +1817,87 @@ function $f_scm_HashTable$HashUtils__improve__I__I__I($thiz, hcode, seed) {
   var i = $m_s_util_hashing_package$().byteswap32__I__I(hcode);
   return (((i >>> seed) | 0) | (i << ((-seed) | 0)))
 }
+/** @constructor */
+function $c_LMainApp$Polygon() {
+  $c_O.call(this);
+  this.polygon$1 = null
+}
+$c_LMainApp$Polygon.prototype = new $h_O();
+$c_LMainApp$Polygon.prototype.constructor = $c_LMainApp$Polygon;
+/** @constructor */
+function $h_LMainApp$Polygon() {
+  /*<skip>*/
+}
+$h_LMainApp$Polygon.prototype = $c_LMainApp$Polygon.prototype;
+$c_LMainApp$Polygon.prototype.move__F__F__V = (function(xIn, yIn) {
+  var value = this.polygon$1.attr("points");
+  if ((value === (void 0))) {
+    throw new $c_ju_NoSuchElementException().init___T("undefined.get")
+  };
+  var rawPoints = $as_T(value);
+  var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(rawPoints, "\\s+", 0);
+  var this$7 = new $c_scm_ArrayOps$ofRef().init___AO(xs);
+  var pairedPoints = $f_sc_IterableLike__grouped__I__sc_Iterator(this$7, 2).toList__sci_List();
+  var f = (function($this, xIn$1, yIn$1) {
+    return (function(x0$1$2) {
+      var x0$1 = $asArrayOf_T(x0$1$2, 1);
+      var o7 = $m_s_Array$().unapplySeq__O__s_Option(x0$1);
+      if (((!o7.isEmpty__Z()) && ((o7.get__O() !== null) && ($as_sc_SeqLike(o7.get__O()).lengthCompare__I__I(2) === 0)))) {
+        var x = $as_T($as_sc_SeqLike(o7.get__O()).apply__I__O(0));
+        var y = $as_T($as_sc_SeqLike(o7.get__O()).apply__I__O(1));
+        var this$9 = new $c_sci_StringOps().init___T(x);
+        var $$this = this$9.repr$1;
+        var jsx$1 = $m_jl_Double$().parseDouble__T__D($$this);
+        var this$13 = new $c_sci_StringOps().init___T(y);
+        var $$this$1 = this$13.repr$1;
+        return (($fround(($fround(jsx$1) + xIn$1)) + "  ") + $fround(($fround($m_jl_Double$().parseDouble__T__D($$this$1)) + yIn$1)))
+      };
+      throw new $c_s_MatchError().init___O(x0$1)
+    })
+  })(this, xIn, yIn);
+  var this$16 = $m_sci_List$();
+  var bf = this$16.ReusableCBFInstance$2;
+  if ((bf === $m_sci_List$().ReusableCBFInstance$2)) {
+    if ((pairedPoints === $m_sci_Nil$())) {
+      var jsx$2 = $m_sci_Nil$()
+    } else {
+      var arg1 = pairedPoints.head__O();
+      var h = new $c_sci_$colon$colon().init___O__sci_List(f(arg1), $m_sci_Nil$());
+      var t = h;
+      var rest = $as_sci_List(pairedPoints.tail__O());
+      while ((rest !== $m_sci_Nil$())) {
+        var arg1$1 = rest.head__O();
+        var nx = new $c_sci_$colon$colon().init___O__sci_List(f(arg1$1), $m_sci_Nil$());
+        t.tl$5 = nx;
+        t = nx;
+        rest = $as_sci_List(rest.tail__O())
+      };
+      var jsx$2 = h
+    }
+  } else {
+    var b = $f_sc_TraversableLike__builder$1__psc_TraversableLike__scg_CanBuildFrom__scm_Builder(pairedPoints, bf);
+    var these = pairedPoints;
+    while ((!these.isEmpty__Z())) {
+      var arg1$2 = these.head__O();
+      b.$$plus$eq__O__scm_Builder(f(arg1$2));
+      these = $as_sci_List(these.tail__O())
+    };
+    var jsx$2 = b.result__O()
+  };
+  var newPoints = $as_sci_List(jsx$2);
+  $m_LMainApp$().MainApp$$setPolygonPoints__Lorg_querki_jquery_JQuery__sci_List__V(this.polygon$1, newPoints)
+});
+$c_LMainApp$Polygon.prototype.init___Lorg_querki_jquery_JQuery = (function(polygon) {
+  this.polygon$1 = polygon;
+  return this
+});
+var $d_LMainApp$Polygon = new $TypeData().initClass({
+  LMainApp$Polygon: 0
+}, false, "MainApp$Polygon", {
+  LMainApp$Polygon: 1,
+  O: 1
+});
+$c_LMainApp$Polygon.prototype.$classData = $d_LMainApp$Polygon;
 function $is_Ljava_io_Closeable(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Ljava_io_Closeable)))
 }
@@ -4366,98 +4447,6 @@ function $h_LMainApp$() {
   /*<skip>*/
 }
 $h_LMainApp$.prototype = $c_LMainApp$.prototype;
-$c_LMainApp$.prototype.MainApp$$$anonfun$main$2__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__sr_BooleanRef__sci_List__O = (function(currentLightSideIndex$1, allElements$1, darkFill$1, finished$1, lightSideElements$1) {
-  if ((currentLightSideIndex$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(allElements$1))) {
-    var n = currentLightSideIndex$1.elem$1;
-    $f_sc_LinearSeqOptimized__apply__I__O(allElements$1, n).show();
-    currentLightSideIndex$1.elem$1 = ((1 + currentLightSideIndex$1.elem$1) | 0);
-    return (void 0)
-  } else if ($uZ(darkFill$1.is(":hidden"))) {
-    return darkFill$1.show(500)
-  } else if ((!finished$1.elem$1)) {
-    var these = lightSideElements$1;
-    while ((!these.isEmpty__Z())) {
-      var arg1 = these.head__O();
-      var value = arg1.children("polygon").attr("points");
-      if ((value === (void 0))) {
-        throw new $c_ju_NoSuchElementException().init___T("undefined.get")
-      };
-      var rawPoints = $as_T(value);
-      var x = ("rawPoints: " + rawPoints);
-      var this$13 = $m_s_Console$();
-      var this$14 = $as_Ljava_io_PrintStream(this$13.outVar$2.v$1);
-      this$14.java$lang$JSConsoleBasedPrintStream$$printString__T__V((x + "\n"));
-      var this$16 = $m_s_Console$();
-      var this$17 = $as_Ljava_io_PrintStream(this$16.outVar$2.v$1);
-      this$17.java$lang$JSConsoleBasedPrintStream$$printString__T__V("shape points: \n");
-      var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(rawPoints, "\\s+", 0);
-      var this$20 = new $c_scm_ArrayOps$ofRef().init___AO(xs);
-      var pairedPoints = $f_sc_IterableLike__grouped__I__sc_Iterator(this$20, 2).toList__sci_List();
-      var x$1 = ("num of paired points: " + $f_sc_LinearSeqOptimized__length__I(pairedPoints));
-      var this$22 = $m_s_Console$();
-      var this$23 = $as_Ljava_io_PrintStream(this$22.outVar$2.v$1);
-      this$23.java$lang$JSConsoleBasedPrintStream$$printString__T__V((x$1 + "\n"));
-      var these$1 = pairedPoints;
-      while ((!these$1.isEmpty__Z())) {
-        var arg1$1 = these$1.head__O();
-        var this$25 = $m_s_Console$();
-        var this$26 = $as_Ljava_io_PrintStream(this$25.outVar$2.v$1);
-        this$26.java$lang$JSConsoleBasedPrintStream$$printString__T__V((arg1$1 + "\n"));
-        these$1 = $as_sci_List(these$1.tail__O())
-      };
-      var f = (function(this$2$1) {
-        return (function(x0$1$2) {
-          var x0$1 = $asArrayOf_T(x0$1$2, 1);
-          var o7 = $m_s_Array$().unapplySeq__O__s_Option(x0$1);
-          if (((!o7.isEmpty__Z()) && ((o7.get__O() !== null) && ($as_sc_SeqLike(o7.get__O()).lengthCompare__I__I(2) === 0)))) {
-            var x$2 = $as_T($as_sc_SeqLike(o7.get__O()).apply__I__O(0));
-            var y = $as_T($as_sc_SeqLike(o7.get__O()).apply__I__O(1));
-            var this$28 = new $c_sci_StringOps().init___T(x$2);
-            var $$this = this$28.repr$1;
-            return (($fround(((-50.0) + $fround($m_jl_Double$().parseDouble__T__D($$this)))) + "  ") + y)
-          };
-          throw new $c_s_MatchError().init___O(x0$1)
-        })
-      })(this);
-      var this$31 = $m_sci_List$();
-      var bf = this$31.ReusableCBFInstance$2;
-      if ((bf === $m_sci_List$().ReusableCBFInstance$2)) {
-        if ((pairedPoints === $m_sci_Nil$())) {
-          var jsx$1 = $m_sci_Nil$()
-        } else {
-          var arg1$2 = pairedPoints.head__O();
-          var h = new $c_sci_$colon$colon().init___O__sci_List(f(arg1$2), $m_sci_Nil$());
-          var t = h;
-          var rest = $as_sci_List(pairedPoints.tail__O());
-          while ((rest !== $m_sci_Nil$())) {
-            var arg1$3 = rest.head__O();
-            var nx = new $c_sci_$colon$colon().init___O__sci_List(f(arg1$3), $m_sci_Nil$());
-            t.tl$5 = nx;
-            t = nx;
-            rest = $as_sci_List(rest.tail__O())
-          };
-          var jsx$1 = h
-        }
-      } else {
-        var b = $f_sc_TraversableLike__builder$1__psc_TraversableLike__scg_CanBuildFrom__scm_Builder(pairedPoints, bf);
-        var these$2 = pairedPoints;
-        while ((!these$2.isEmpty__Z())) {
-          var arg1$4 = these$2.head__O();
-          b.$$plus$eq__O__scm_Builder(f(arg1$4));
-          these$2 = $as_sci_List(these$2.tail__O())
-        };
-        var jsx$1 = b.result__O()
-      };
-      var newPoints = $as_sc_TraversableOnce(jsx$1).mkString__T__T(" ");
-      arg1.children("polygon").attr("points", newPoints);
-      these = $as_sci_List(these.tail__O())
-    };
-    finished$1.elem$1 = true;
-    return (void 0)
-  } else {
-    return (void 0)
-  }
-});
 $c_LMainApp$.prototype.init___ = (function() {
   this.biggestSideMedium$1 = "SIDE_Med_07";
   this.biggestSideLight$1 = "SIDE_Light_08";
@@ -4491,26 +4480,81 @@ $c_LMainApp$.prototype.main__V = (function() {
   var lightTopElements = this.logoElementGroup__s_Enumeration$Value__s_Enumeration$Value__I__sci_List($m_LMainApp$Sector$().Top$2, $m_LMainApp$LogoColor$().Light$2, 8);
   var mediumTopElements = this.logoElementGroup__s_Enumeration$Value__s_Enumeration$Value__I__sci_List($m_LMainApp$Sector$().Top$2, $m_LMainApp$LogoColor$().Medium$2, 7);
   var this$23 = $m_sci_List$();
-  var jsx$3 = $as_sci_List(counterSpaceElements.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(lightSideElements, this$23.ReusableCBFInstance$2));
+  var jsx$1 = $as_sci_List(counterSpaceElements.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(lightTopElements, this$23.ReusableCBFInstance$2));
   var this$24 = $m_sci_List$();
-  var jsx$2 = $as_sci_List(jsx$3.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(mediumSideElements, this$24.ReusableCBFInstance$2));
-  var this$25 = $m_sci_List$();
-  var jsx$1 = $as_sci_List(jsx$2.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(lightTopElements, this$25.ReusableCBFInstance$2));
-  var this$26 = $m_sci_List$();
-  var allElements = $as_sci_List(jsx$1.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(mediumTopElements, this$26.ReusableCBFInstance$2));
-  var these = allElements;
+  var topAndCounterSpaceElements = $as_sci_List(jsx$1.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(mediumTopElements, this$24.ReusableCBFInstance$2));
+  var these = topAndCounterSpaceElements;
   while ((!these.isEmpty__Z())) {
     var arg1 = these.head__O();
     arg1.hide();
     these = $as_sci_List(these.tail__O())
   };
-  var currentLightSideIndex = new $c_sr_IntRef().init___I(0);
-  var finished = new $c_sr_BooleanRef().init___Z(false);
-  $m_Lorg_scalajs_dom_package$().window__Lorg_scalajs_dom_raw_Window().setInterval((function(currentLightSideIndex$1, allElements$1, darkFill$1, finished$1, lightSideElements$1) {
+  var allElementIndex = new $c_sr_IntRef().init___I(0);
+  var loopsCompleted = new $c_sr_IntRef().init___I(0);
+  var lightSidePiecesRestoredToOriginalLocation = new $c_sr_IntRef().init___I(0);
+  var mediumSidePiecesRestoredToOriginalLocation = new $c_sr_IntRef().init___I(0);
+  var these$1 = lightSideElements;
+  while ((!these$1.isEmpty__Z())) {
+    var arg1$1 = these$1.head__O();
+    var polygon = new $c_LMainApp$Polygon().init___Lorg_querki_jquery_JQuery(arg1$1.children("polygon"));
+    polygon.move__F__F__V((-300.0), 0.0);
+    these$1 = $as_sci_List(these$1.tail__O())
+  };
+  var these$2 = mediumSideElements;
+  while ((!these$2.isEmpty__Z())) {
+    var arg1$2 = these$2.head__O();
+    var polygon$1 = new $c_LMainApp$Polygon().init___Lorg_querki_jquery_JQuery(arg1$2.children("polygon"));
+    polygon$1.move__F__F__V((-300.0), 0.0);
+    these$2 = $as_sci_List(these$2.tail__O())
+  };
+  $m_Lorg_scalajs_dom_package$().window__Lorg_scalajs_dom_raw_Window().setInterval((function(allElementIndex$1, topAndCounterSpaceElements$1, lightSidePiecesRestoredToOriginalLocation$1, lightSideElements$1, horizontalStep$1, loopsCompleted$1, loopLimit$1, mediumSidePiecesRestoredToOriginalLocation$1, mediumSideElements$1, darkFill$1) {
     return (function() {
-      return $m_LMainApp$().MainApp$$$anonfun$main$2__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__sr_BooleanRef__sci_List__O(currentLightSideIndex$1, allElements$1, darkFill$1, finished$1, lightSideElements$1)
+      return $m_LMainApp$().MainApp$$$anonfun$main$4__sr_IntRef__sci_List__sr_IntRef__sci_List__I__sr_IntRef__I__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__O(allElementIndex$1, topAndCounterSpaceElements$1, lightSidePiecesRestoredToOriginalLocation$1, lightSideElements$1, horizontalStep$1, loopsCompleted$1, loopLimit$1, mediumSidePiecesRestoredToOriginalLocation$1, mediumSideElements$1, darkFill$1)
     })
-  })(currentLightSideIndex, allElements, darkFill, finished, lightSideElements), 100.0)
+  })(allElementIndex, topAndCounterSpaceElements, lightSidePiecesRestoredToOriginalLocation, lightSideElements, 60, loopsCompleted, 5, mediumSidePiecesRestoredToOriginalLocation, mediumSideElements, darkFill), 50.0)
+});
+$c_LMainApp$.prototype.MainApp$$setPolygonPoints__Lorg_querki_jquery_JQuery__sci_List__V = (function(polygon, newPoints) {
+  if ((!$uZ(polygon.is("polygon")))) {
+    throw new $c_jl_IllegalArgumentException().init___T("Element is not a polygon.")
+  };
+  var a = $f_sc_TraversableOnce__mkString__T__T__T__T(newPoints, "", " ", "");
+  polygon.attr("points", a)
+});
+$c_LMainApp$.prototype.MainApp$$$anonfun$main$4__sr_IntRef__sci_List__sr_IntRef__sci_List__I__sr_IntRef__I__sr_IntRef__sci_List__Lorg_querki_jquery_JQuery__O = (function(allElementIndex$1, topAndCounterSpaceElements$1, lightSidePiecesRestoredToOriginalLocation$1, lightSideElements$1, horizontalStep$1, loopsCompleted$1, loopLimit$1, mediumSidePiecesRestoredToOriginalLocation$1, mediumSideElements$1, darkFill$1) {
+  if ((allElementIndex$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(topAndCounterSpaceElements$1))) {
+    var n = allElementIndex$1.elem$1;
+    $f_sc_LinearSeqOptimized__apply__I__O(topAndCounterSpaceElements$1, n).show();
+    allElementIndex$1.elem$1 = ((1 + allElementIndex$1.elem$1) | 0);
+    return (void 0)
+  } else if ((lightSidePiecesRestoredToOriginalLocation$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(lightSideElements$1))) {
+    var n$1 = lightSidePiecesRestoredToOriginalLocation$1.elem$1;
+    var jsx$1 = $f_sc_LinearSeqOptimized__apply__I__O(lightSideElements$1, n$1).children("polygon");
+    var polygon = new $c_LMainApp$Polygon().init___Lorg_querki_jquery_JQuery(jsx$1);
+    polygon.move__F__F__V($fround(horizontalStep$1), 0.0);
+    loopsCompleted$1.elem$1 = ((1 + loopsCompleted$1.elem$1) | 0);
+    if ((loopsCompleted$1.elem$1 === loopLimit$1)) {
+      loopsCompleted$1.elem$1 = 0;
+      lightSidePiecesRestoredToOriginalLocation$1.elem$1 = ((1 + lightSidePiecesRestoredToOriginalLocation$1.elem$1) | 0);
+      return (void 0)
+    } else {
+      return (void 0)
+    }
+  } else if ((mediumSidePiecesRestoredToOriginalLocation$1.elem$1 < $f_sc_LinearSeqOptimized__length__I(mediumSideElements$1))) {
+    var n$2 = mediumSidePiecesRestoredToOriginalLocation$1.elem$1;
+    var jsx$2 = $f_sc_LinearSeqOptimized__apply__I__O(mediumSideElements$1, n$2).children("polygon");
+    var polygon$2 = new $c_LMainApp$Polygon().init___Lorg_querki_jquery_JQuery(jsx$2);
+    polygon$2.move__F__F__V($fround(horizontalStep$1), 0.0);
+    loopsCompleted$1.elem$1 = ((1 + loopsCompleted$1.elem$1) | 0);
+    if ((loopsCompleted$1.elem$1 === loopLimit$1)) {
+      loopsCompleted$1.elem$1 = 0;
+      mediumSidePiecesRestoredToOriginalLocation$1.elem$1 = ((1 + mediumSidePiecesRestoredToOriginalLocation$1.elem$1) | 0);
+      return (void 0)
+    } else {
+      return (void 0)
+    }
+  } else {
+    return ($uZ(darkFill$1.is(":hidden")) ? darkFill$1.show(500) : (void 0))
+  }
 });
 $c_LMainApp$.prototype.$$js$exported$meth$main__O = (function() {
   this.main__V()
@@ -8110,9 +8154,6 @@ $c_sc_AbstractIterator.prototype.toList__sci_List = (function() {
   var this$1 = $m_sci_List$();
   var cbf = this$1.ReusableCBFInstance$2;
   return $as_sci_List($f_sc_TraversableOnce__to__scg_CanBuildFrom__O(this, cbf))
-});
-$c_sc_AbstractIterator.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
 });
 $c_sc_AbstractIterator.prototype.toString__T = (function() {
   return "<iterator>"
@@ -14285,9 +14326,6 @@ $c_sc_AbstractTraversable.prototype.toList__sci_List = (function() {
   var cbf = this$1.ReusableCBFInstance$2;
   return $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(this, cbf))
 });
-$c_sc_AbstractTraversable.prototype.mkString__T__T = (function(sep) {
-  return this.mkString__T__T__T__T("", sep, "")
-});
 $c_sc_AbstractTraversable.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
 });
@@ -14715,9 +14753,6 @@ $c_sci_StringOps.prototype.thisCollection__sc_Traversable = (function() {
 $c_sci_StringOps.prototype.equals__O__Z = (function(x$1) {
   return $m_sci_StringOps$().equals$extension__T__O__Z(this.repr$1, x$1)
 });
-$c_sci_StringOps.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
-});
 $c_sci_StringOps.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
 });
@@ -14913,9 +14948,6 @@ $c_scm_ArrayOps$ofBoolean.prototype.thisCollection__sc_Traversable = (function()
 $c_scm_ArrayOps$ofBoolean.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofBoolean$().equals$extension__AZ__O__Z(this.repr$1, x$1)
 });
-$c_scm_ArrayOps$ofBoolean.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
-});
 $c_scm_ArrayOps$ofBoolean.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
 });
@@ -15060,9 +15092,6 @@ $c_scm_ArrayOps$ofByte.prototype.thisCollection__sc_Traversable = (function() {
 });
 $c_scm_ArrayOps$ofByte.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofByte$().equals$extension__AB__O__Z(this.repr$1, x$1)
-});
-$c_scm_ArrayOps$ofByte.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
 });
 $c_scm_ArrayOps$ofByte.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
@@ -15210,9 +15239,6 @@ $c_scm_ArrayOps$ofChar.prototype.thisCollection__sc_Traversable = (function() {
 $c_scm_ArrayOps$ofChar.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofChar$().equals$extension__AC__O__Z(this.repr$1, x$1)
 });
-$c_scm_ArrayOps$ofChar.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
-});
 $c_scm_ArrayOps$ofChar.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
 });
@@ -15357,9 +15383,6 @@ $c_scm_ArrayOps$ofDouble.prototype.thisCollection__sc_Traversable = (function() 
 });
 $c_scm_ArrayOps$ofDouble.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofDouble$().equals$extension__AD__O__Z(this.repr$1, x$1)
-});
-$c_scm_ArrayOps$ofDouble.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
 });
 $c_scm_ArrayOps$ofDouble.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
@@ -15506,9 +15529,6 @@ $c_scm_ArrayOps$ofFloat.prototype.thisCollection__sc_Traversable = (function() {
 $c_scm_ArrayOps$ofFloat.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofFloat$().equals$extension__AF__O__Z(this.repr$1, x$1)
 });
-$c_scm_ArrayOps$ofFloat.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
-});
 $c_scm_ArrayOps$ofFloat.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
 });
@@ -15653,9 +15673,6 @@ $c_scm_ArrayOps$ofInt.prototype.thisCollection__sc_Traversable = (function() {
 });
 $c_scm_ArrayOps$ofInt.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofInt$().equals$extension__AI__O__Z(this.repr$1, x$1)
-});
-$c_scm_ArrayOps$ofInt.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
 });
 $c_scm_ArrayOps$ofInt.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
@@ -15806,9 +15823,6 @@ $c_scm_ArrayOps$ofLong.prototype.thisCollection__sc_Traversable = (function() {
 $c_scm_ArrayOps$ofLong.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofLong$().equals$extension__AJ__O__Z(this.repr$1, x$1)
 });
-$c_scm_ArrayOps$ofLong.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
-});
 $c_scm_ArrayOps$ofLong.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
 });
@@ -15949,9 +15963,6 @@ $c_scm_ArrayOps$ofRef.prototype.thisCollection__sc_Traversable = (function() {
 });
 $c_scm_ArrayOps$ofRef.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofRef$().equals$extension__AO__O__Z(this.repr$1, x$1)
-});
-$c_scm_ArrayOps$ofRef.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
 });
 $c_scm_ArrayOps$ofRef.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
@@ -16103,9 +16114,6 @@ $c_scm_ArrayOps$ofShort.prototype.thisCollection__sc_Traversable = (function() {
 $c_scm_ArrayOps$ofShort.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofShort$().equals$extension__AS__O__Z(this.repr$1, x$1)
 });
-$c_scm_ArrayOps$ofShort.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
-});
 $c_scm_ArrayOps$ofShort.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
 });
@@ -16245,9 +16253,6 @@ $c_scm_ArrayOps$ofUnit.prototype.thisCollection__sc_Traversable = (function() {
 });
 $c_scm_ArrayOps$ofUnit.prototype.equals__O__Z = (function(x$1) {
   return $m_scm_ArrayOps$ofUnit$().equals$extension__Asr_BoxedUnit__O__Z(this.repr$1, x$1)
-});
-$c_scm_ArrayOps$ofUnit.prototype.mkString__T__T = (function(sep) {
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this, "", sep, "")
 });
 $c_scm_ArrayOps$ofUnit.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   return $f_sc_TraversableOnce__mkString__T__T__T__T(this, start, sep, end)
@@ -17818,9 +17823,6 @@ $c_sci_Stream.prototype.equals__O__Z = (function(that) {
 });
 $c_sci_Stream.prototype.drop__I__sc_LinearSeqOptimized = (function(n) {
   return this.drop__I__sci_Stream(n)
-});
-$c_sci_Stream.prototype.mkString__T__T = (function(sep) {
-  return this.mkString__T__T__T__T("", sep, "")
 });
 $c_sci_Stream.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   this.force__sci_Stream();
@@ -20888,10 +20890,6 @@ $c_scm_ListBuffer.prototype.equals__O__Z = (function(that) {
   } else {
     return $f_sc_GenSeqLike__equals__O__Z(this, that)
   }
-});
-$c_scm_ListBuffer.prototype.mkString__T__T = (function(sep) {
-  var this$1 = this.scala$collection$mutable$ListBuffer$$start$6;
-  return $f_sc_TraversableOnce__mkString__T__T__T__T(this$1, "", sep, "")
 });
 $c_scm_ListBuffer.prototype.mkString__T__T__T__T = (function(start, sep, end) {
   var this$1 = this.scala$collection$mutable$ListBuffer$$start$6;

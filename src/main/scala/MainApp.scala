@@ -1,9 +1,11 @@
+import java.awt.Polygon
+
 import MainApp.LogoColor.LogoColor
 import MainApp.Sector.Sector
 
 import scala.scalajs.js.{JSApp, UndefOr}
+import org.scalajs.dom
 
-//import org.scalajs.dom
 //import dom.{ document, window }
 
 import org.querki.jquery._
@@ -51,44 +53,73 @@ object MainApp extends JSApp {
     val lightTopElements = logoElementGroup(Sector.Top, LogoColor.Light, 8)
     val mediumTopElements = logoElementGroup(Sector.Top, LogoColor.Medium, 7)
 
-    val allElements =
+    val topAndCounterSpaceElements =
       counterSpaceElements ++
-      lightSideElements ++
-        mediumSideElements ++
         lightTopElements ++
         mediumTopElements
 
-    allElements.foreach(_.hide)
+    topAndCounterSpaceElements.foreach(_.hide)
 
-    var currentLightSideIndex = 0
-    var finished = false
+    var allElementIndex = 0
+    var loopsCompleted = 0
+    val loopLimit = 5
+    var lightSidePiecesRestoredToOriginalLocation = 0
+    var mediumSidePiecesRestoredToOriginalLocation = 0
 
-    import org.scalajs.dom
+    val startingHorizontalOffset = -300
+    val horizontalStep = -(startingHorizontalOffset / loopLimit)
+
+    lightSideElements.foreach(lightSideElement => {
+      val polygon = new Polygon(lightSideElement.children("polygon"))
+      polygon.move(startingHorizontalOffset, 0)
+    })
+
+    mediumSideElements.foreach(mediumSideElement => {
+      val polygon = new Polygon(mediumSideElement.children("polygon"))
+      polygon.move(startingHorizontalOffset, 0)
+    })
+
     dom.window.setInterval( () => {
-      if (currentLightSideIndex < allElements.size) {
-        allElements(currentLightSideIndex).show()
-        currentLightSideIndex += 1
-      } else if (darkFill.is(":hidden")){
+      if (allElementIndex < topAndCounterSpaceElements.size) {
+        topAndCounterSpaceElements(allElementIndex).show()
+        allElementIndex += 1
+      } else if (lightSidePiecesRestoredToOriginalLocation < lightSideElements.size) {
+        val polygon = new Polygon(lightSideElements(lightSidePiecesRestoredToOriginalLocation).children("polygon"))
+        polygon.move(horizontalStep, 0)
+        loopsCompleted += 1
+        if (loopsCompleted == loopLimit) {
+          loopsCompleted = 0
+          lightSidePiecesRestoredToOriginalLocation += 1
+        }
+      } else if (mediumSidePiecesRestoredToOriginalLocation < mediumSideElements.size) {
+        val polygon = new Polygon(mediumSideElements(mediumSidePiecesRestoredToOriginalLocation).children("polygon"))
+        polygon.move(horizontalStep, 0)
+        loopsCompleted += 1
+        if (loopsCompleted == loopLimit) {
+          loopsCompleted = 0
+          mediumSidePiecesRestoredToOriginalLocation += 1
+        }
+      } else if (darkFill.is(":hidden")) {
         darkFill.show(500)
-      } else if (!finished) {
-        lightSideElements.foreach(lightSideElement => {
-          val rawPoints: String = lightSideElement.children("polygon").attr("points").get
-          println("rawPoints: " + rawPoints)
-          println("shape points: " )
-          val pairedPoints: List[Array[String]] = rawPoints.split("\\s+").grouped(2).toList
-          println("num of paired points: " + pairedPoints.length)
-          pairedPoints.foreach(println)
-          val newPoints = pairedPoints.map {
-            case Array(x, y) => s"${x.toFloat-50}  $y"
-          }.mkString(" ")
-          lightSideElement.children("polygon").attr("points", newPoints)
-        })
-        finished = true
       }
-//      if (element.is(":visible")) element.hide()
-//      else element.show()
-    }, 100)
+    }, 50)
 
+  }
+
+  class Polygon(polygon: JQuery) {
+    def move(xIn: Float, yIn: Float): Unit = {
+      val rawPoints: String = polygon.attr("points").get
+      val pairedPoints: List[Array[String]] = rawPoints.split("\\s+").grouped(2).toList
+      val newPoints = pairedPoints.map {
+        case Array(x, y) => s"${x.toFloat+xIn}  ${y.toFloat+yIn}"
+      }
+      setPolygonPoints(polygon, newPoints)
+    }
+  }
+
+  private def setPolygonPoints(polygon: JQuery, newPoints: List[String]): Unit = {
+    if (!polygon.is("polygon")) throw new IllegalArgumentException("Element is not a polygon.")
+      polygon.attr("points", newPoints.mkString(" "))
   }
 
 }
